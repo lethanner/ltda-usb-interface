@@ -1,3 +1,38 @@
+An USB-I2S and USB-UART combined interface for my [LTDA Prime](https://github.com/lethanner/ltda-prime) project.  
+I'm very new to STM32 and USB, so I redid it as best I could.
+
+## Changes
+* Changed project structure for STM32CubeIDE on Windows
+* Changed USB device name
+* Made Composite USB device from just USB Audio device
+* Removed STM32F411xxxx support
+* Removed sample rate LEDs
+* Disabled on-board button function
+* Added initialization and activity LED
+
+## Known issues
+* 96 kHz mode isn't working properly (100% fails for isochronous feedback packets) - causes periodic sound distortion due to buffer overflow/underflow
+* 44.1 kHz and 48 kHz have less than 100% successful rate for isochronous feedback packets, but there's no sound distortion
+* USB-UART relay is not yet 100% implemented
+* Playback state may remain unchanged if the audio was immediately stopped, resulting in a loop sound effect like a BSoD
+
+## Debugging
+Used [Wireshark](https://www.wireshark.org/) with USBPcap driver.
+
+## Credits
+Used code from the following projects:
+* https://github.com/har-in-air/STM32F411_USB_AUDIO_DAC (forked from this)
+* https://github.com/dmitrii-rudnev/selenite-habr-uac (BSD-3-Clause license)
+
+This articles (in Russian) may be useful:
+* https://habr.com/ru/articles/532080/ (part 2 of 4 with links to other parts)
+* https://habr.com/ru/articles/674662/
+
+Thanks to it's authors.
+
+
+# Original README
+
 # USB Hi-Res Stereo Audio DAC using STM32F4xx "Black Pill" and PCM5102A or UDA1334ATS DAC
 
 * USB Full Speed Class 1 Audio device, no driver installation required
