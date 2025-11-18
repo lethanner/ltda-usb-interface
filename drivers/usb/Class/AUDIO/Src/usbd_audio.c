@@ -574,10 +574,10 @@ static uint8_t USBD_AUDIO_SOF(USBD_HandleTypeDef* pdev)
     // Monitor remaining writable buffer samples with LED
     if (audio_buf_writable_samples < AUDIO_BUF_SAFEZONE_SAMPLES) {
     	BSP_OnboardLED_On();
-    	}
+    }
     else {
     	BSP_OnboardLED_Off();
-    	}
+    }
 
     sof_count += 1;
 
