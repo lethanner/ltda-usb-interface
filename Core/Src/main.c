@@ -1,30 +1,38 @@
 #include "main.h"
 #include "usart.h"
-#include "usbd_audio.h"
 #include <stdio.h>
 #include <stdarg.h>
 
 USBD_HandleTypeDef USBD_Device;
 AUDIO_STATUS_TypeDef audio_status;
+extern PCD_HandleTypeDef hpcd;
 
 void SystemClock_Config(void);
 
 int main(void) {
   HAL_Init();
   SystemClock_Config();
-
-  //MX_USART2_UART_Init();
-  printMsg("\r\nUSB Audio I2S Bridge\r\n");
+  MX_USART2_UART_Init();
 
   bsp_init();
 
-  // Init Device Library
+  /*// Init Device Library
   USBD_Init(&USBD_Device, &AUDIO_Desc, 0);
   // Add Supported Class
   USBD_RegisterClass(&USBD_Device, USBD_AUDIO_CLASS);
   // Add Interface callbacks for AUDIO Class
   USBD_AUDIO_RegisterInterface(&USBD_Device, &USBD_AUDIO_fops);
   // Start Device Process
+  USBD_Start(&USBD_Device);*/
+
+  USBD_Init(&USBD_Device, &FS_Desc, 0);
+
+  /*HAL_PCDEx_SetTxFiFo(&hpcd, 1, 0x10);
+  HAL_PCDEx_SetTxFiFo(&hpcd, 2, 0x10);
+  HAL_PCDEx_SetTxFiFo(&hpcd, 3, 0xC0);*/
+
+  USBD_RegisterClass(&USBD_Device, &USBD_COMP);
+  USBD_COMP_RegisterInterface(&USBD_Device, &USBD_COMP_fops_FS);
   USBD_Start(&USBD_Device);
   
   while (1) {
@@ -148,17 +156,6 @@ void SystemClock_Config(void)
 }
 #endif
 
-
-
-void printMsg(char* format, ...) {
-	char sz[100];
-	va_list args;
-	va_start(args, format);
-	vsprintf(sz, format, args);
-	HAL_UART_Transmit(&huart2, (uint8_t *)sz, strlen(sz), HAL_MAX_DELAY);
-	va_end(args);
-	}
-
 void Error_Handler(void){
 	uint32_t counter;
 	while(1){
@@ -179,7 +176,7 @@ void Error_Handler(void){
   */
 void assert_failed(uint8_t *file, uint32_t line)
 { 
-    printMsg("Wrong parameters value: file %s on line %d\r\n", file, line);
+    //printMsg("Wrong parameters value: file %s on line %d\r\n", file, line);
 }
 #endif /* USE_FULL_ASSERT */
 

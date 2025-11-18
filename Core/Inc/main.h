@@ -31,11 +31,10 @@ extern "C" {
 #include "usbd_desc.h"
 #include "usbd_audio.h"
 #include "usbd_audio_if.h"
+#include "usbd_comp.h"
 #include "bsp_audio.h"
 
 void Error_Handler(void);
-void printMsg(char* format, ...);
-
 
 #ifdef __cplusplus
 }

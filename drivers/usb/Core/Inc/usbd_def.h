@@ -292,4 +292,3 @@ typedef struct _USBD_HandleTypeDef
 #endif
 
 #endif /* __USBD_DEF_H */
-

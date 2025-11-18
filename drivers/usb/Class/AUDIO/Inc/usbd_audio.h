@@ -66,8 +66,11 @@
 #endif
 
 /* bEndpointAddress, see UAC 1.0 spec, p.61 */
-#define AUDIO_OUT_EP                                  0x01U
-#define AUDIO_IN_EP                                   0x81U
+#define AUDIO_OUT_EP                                  0x03U // (???)
+#define AUDIO_IN_EP                                   0x84U
+
+#define AUDIO_CTRL_IF								  0x02U
+#define AUDIO_OUT_IF								  0x03U
 
 #define SOF_RATE                                      0x02U
 
